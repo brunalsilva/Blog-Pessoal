@@ -66,9 +66,11 @@ public class PostagemController {
 		public ResponseEntity<Object> delete(@PathVariable long id) 
 		{
 		   return postagemRepository.findById(id)
-		           .map(record -> {
+		           .map(record -> 
+		           {
 		               postagemRepository.deleteById(id);
-		               return ResponseEntity.ok().build();
-		           }).orElse(ResponseEntity.notFound().build());
+		               return ResponseEntity.status(HttpStatus.OK).build();
+		           })
+		           .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 		}
 }
