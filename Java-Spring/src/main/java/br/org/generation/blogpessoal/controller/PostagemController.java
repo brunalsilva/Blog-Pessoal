@@ -1,6 +1,7 @@
 package br.org.generation.blogpessoal.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -55,33 +56,19 @@ public class PostagemController {
 		}
 		
 		@PutMapping
-		public ResponseEntity <Postagem> putPostagem(@Valid @RequestBody Postagem postagem, Long id) //equivale ao update do MySQL
+		public ResponseEntity <Postagem> putPostagem(@Valid @RequestBody Postagem postagem) //equivale ao update do MySQL
 		{
-			boolean checkId = postagemRepository.existsById(id);
-			if (checkId = true)
-				{
-				return ResponseEntity.status(HttpStatus.OK).body(postagemRepository.save(postagem));
-				}
-			else
-			{
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(postagemRepository.getById(id));
-			}
-		} 
+			return postagemRepository.findById(postagem.getId())             
+					.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(postagemRepository.save(postagem)))             					.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+		}
 		
-		@DeleteMapping("/{id}")
-		public void deletePostagem(@PathVariable Long id)
+		@DeleteMapping(path ={"/{id}"})
+		public ResponseEntity<Object> delete(@PathVariable long id) 
 		{
-			boolean checkId = postagemRepository.existsById(id);
-			if (checkId = true)
-			{
-			postagemRepository.deleteById(id);
-			}
-			else
-			{
-				/*return ResponseEntity.status(HttpStatus.NOT_FOUND).getById(id));
-				return postagemRepository.existsById(id)
-						.map(resp -> ResponseEntity.ok(resp)) 
-						.orElse(ResponseEntity.notFound().build());*/
-			}
+		   return postagemRepository.findById(id)
+		           .map(record -> {
+		               postagemRepository.deleteById(id);
+		               return ResponseEntity.ok().build();
+		           }).orElse(ResponseEntity.notFound().build());
 		}
 }
