@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity //create table
-@Table(name="tb_postagens") //criando o nome da tabela
+@Table(name="tb_postagens") //criando o nome da tabela, não pode ter espaço entre a anotação e o conteúdo.
 public class Postagem {
 		
 		@Id // primary key
