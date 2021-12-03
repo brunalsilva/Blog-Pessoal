@@ -50,7 +50,7 @@ public class PostagemController {
 		}
 		
 		@PostMapping
-		public ResponseEntity <Postagem> postPostagem(@Valid @RequestBody Postagem postagem)
+		public ResponseEntity <Postagem> postPostagem(@Valid @RequestBody Postagem postagem) //response entiity devolve um status
 		{
 			return ResponseEntity.status(HttpStatus.CREATED).body(postagemRepository.save(postagem));
 		}
@@ -59,17 +59,18 @@ public class PostagemController {
 		public ResponseEntity <Postagem> putPostagem(@Valid @RequestBody Postagem postagem) //equivale ao update do MySQL
 		{
 			return postagemRepository.findById(postagem.getId())             
-					.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(postagemRepository.save(postagem)))             					.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+					.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(postagemRepository.save(postagem)))   
+					.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build()); //build devolve só o status
 		}
 		
 		@DeleteMapping(path ={"/{id}"})
-		public ResponseEntity<Object> delete(@PathVariable long id) 
+		public ResponseEntity<?> delete(@PathVariable Long id) 
 		{
 		   return postagemRepository.findById(id)
 		           .map(record -> 
 		           {
 		               postagemRepository.deleteById(id);
-		               return ResponseEntity.status(HttpStatus.OK).build();
+		               return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		           })
 		           .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 		}
