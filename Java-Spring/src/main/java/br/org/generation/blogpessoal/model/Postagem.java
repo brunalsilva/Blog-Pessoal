@@ -36,6 +36,10 @@ public class Postagem {
 		@JsonIgnoreProperties("postagem")
 		private Tema tema;
 		
+		@ManyToOne
+		@JsonIgnoreProperties("usuario")
+		private Usuario usuario;
+		
 		@UpdateTimestamp
 		private LocalDate data;
 		
