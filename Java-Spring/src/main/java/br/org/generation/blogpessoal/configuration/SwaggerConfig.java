@@ -26,12 +26,12 @@ public class SwaggerConfig {
 					.name("generation.org.br")
 					.url("http://springdoc.org"))
 				.contact(new Contact()
-					.name("Bruna Lima")
-					.url("https://github.com/brunalsilva")
-					.email("dev.brunalima@gmail.com")))
+					.name("Mirella Farias")
+					.url("https://github.com/mirellamm")
+					.email("mirellambarros@outlook.com")))
 				.externalDocs(new ExternalDocumentation()
 					.description("Github")
-					.url("https://github.com/brunalsilva/Blog-Pessoal"));
+					.url("https://github.com/mirellamm"));
 	}
 
 	@Bean
